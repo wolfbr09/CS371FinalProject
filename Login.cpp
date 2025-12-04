@@ -2,6 +2,10 @@
 // Contains the definitions for the Login class
 
 
+
+vector<Login*> Login::users = vector<Login*>();
+vector<string> Login::usernames = vector<string>();
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *				USE THIS WHEN HAVING USERS CREATE LOGIN
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
