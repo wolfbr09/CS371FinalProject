@@ -15,10 +15,11 @@ private:
 	string description;
 	Transaction* next = 0;
 	Transaction* previous = 0;
+	int bankAccountNumber = -1;
 public:
 	// Constructors
-	Transaction(double new_val);
-	Transaction(double new_val, string new_desc);
+	Transaction(int bankNum, double new_val);
+	Transaction(int bankNum, double new_val, string new_desc);
 	Transaction(Transaction* other);
 	// Getters & Setters
 	double get_value();
@@ -28,6 +29,11 @@ public:
 	void set_previous(Transaction* new_prev);
 	Transaction* get_next();
 	Transaction* get_previous();
+	int get_bank_num();
+	void set_bank_num(int newNum);
+	
+	static void save(Transaction& trnsction);
+	static void load();
 };
 
 #endif

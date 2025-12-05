@@ -11,7 +11,7 @@ BankAccount::BankAccount() {
 	activeAccounts++;
 	balance = 0;
 	accountType = "";
-	transactionsHead = new Transaction(0, "Balance as of Account Open");
+	transactionsHead = new Transaction(accountNumber, 0, "Balance as of Account Open");
 }
 
 BankAccount::BankAccount(double value) {
@@ -20,7 +20,7 @@ BankAccount::BankAccount(double value) {
 	activeAccounts++;
 	balance = value;
 	accountType = "";
-	transactionsHead = new Transaction(value, "Balance as of Account Open");
+	transactionsHead = new Transaction(accountNumber, value, "Balance as of Account Open");
 }
 
 BankAccount::BankAccount(double value, string type) {
@@ -29,7 +29,7 @@ BankAccount::BankAccount(double value, string type) {
 	activeAccounts++;
 	balance = value;
 	accountType = type;
-	transactionsHead = new Transaction(value, "Balance as of Account Open");
+	transactionsHead = new Transaction(accountNumber, value, "Balance as of Account Open");
 }
 
 BankAccount::BankAccount(string type) {
@@ -38,7 +38,7 @@ BankAccount::BankAccount(string type) {
 	activeAccounts++;
 	balance = 0;
 	accountType = type;
-	transactionsHead = new Transaction(0, "Balance as of Account Open");
+	transactionsHead = new Transaction(accountNumber, 0, "Balance as of Account Open");
 }
 
 BankAccount::BankAccount(BankAccount& acct) {
@@ -47,7 +47,25 @@ BankAccount::BankAccount(BankAccount& acct) {
 	activeAccounts++;
 	balance = acct.getBalance();
 	accountType = acct.getAccountType();
-	transactionsHead = new Transaction(acct.getBalance(), "Balance as of Account Open");
+	transactionsHead = new Transaction(accountNumber, acct.getBalance(), "Balance as of Account Open");
+}
+
+// This should ONLY be used when loading data
+BankAccount::BankAccount(int acctNum, double value, string type){
+	accountNumber = acctNum;
+	balance = value;
+	accountType = type;
+	transactionsHead = 0;
+}
+
+BankAccount::~BankAccount() {
+	Transaction* currTransaction = transactionsHead;
+	while (currTransaction != nullptr) {
+		Transaction* prevTransaction = currTransaction;
+		currTransaction = currTransaction->get_next();
+		delete prevTransaction;
+	}
+	transactionsHead = nullptr;
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,7 +88,7 @@ double BankAccount::withdraw(double amount) {
 		return 0;
 	}
 
-	addNewTransaction(new Transaction(-balance));
+	addNewTransaction(new Transaction(accountNumber, -amount));
 	balance -= amount;
 	return amount;
 }
@@ -81,7 +99,7 @@ bool BankAccount::deposit(double amount) {
 		return false;
 	}
 
-	addNewTransaction(new Transaction(amount));
+	addNewTransaction(new Transaction(accountNumber, amount));
 	balance += amount;
 	return true;
 }
@@ -123,4 +141,16 @@ string BankAccount::getAccountType() {
 
 Transaction* BankAccount::getTransactions() { 
 	return transactionsHead; 
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*						Saving and Loading
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+void BankAccount::save(BankAccount& acct) {
+	return;
+}
+
+void BankAccount::load() {
+	return;
 }

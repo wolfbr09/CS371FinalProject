@@ -5,14 +5,17 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *							Constructors
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-Transaction::Transaction(double new_val) { 
+Transaction::Transaction(int bankNum, double new_val) { 
+	bankAccountNumber = bankNum;
 	value = new_val;
 }
-Transaction::Transaction(double new_val, string new_desc) { 
+Transaction::Transaction(int bankNum, double new_val, string new_desc) { 
+	bankAccountNumber = bankNum;
 	value = new_val;
 	description = new_desc; 
 }
 Transaction::Transaction(Transaction* other) { 
+	bankAccountNumber = other->get_bank_num();
 	value = other->get_value();
 	description = other->get_description(); 
 }
@@ -40,4 +43,24 @@ Transaction* Transaction::get_next() {
 }
 Transaction* Transaction::get_previous() { 
 	return previous;
+}
+
+int Transaction::get_bank_num() {
+	return bankAccountNumber;
+}
+
+void Transaction::set_bank_num(int newNum) {
+	bankAccountNumber = newNum;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*						Saving and Loading
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+void Transaction::save(Transaction& trnsction) {
+	return;
+}
+
+void Transaction::load() {
+	return;
 }
