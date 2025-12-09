@@ -15,12 +15,12 @@ private:
 	static vector<string> usernames;
 	string username;
 	string password;
-	Login(string user, string pass);
 	~Login();
 	static string enterUniqueUsername();
 	static string enterSecurePassword();
 public:
 	static Login* createLogin();
+	Login(string user, string pass);
 	string getUsername();
 	string getPassword();
 	void setPassword();

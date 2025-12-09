@@ -25,10 +25,8 @@ private:
 
 	static int getNextScreen(int lower, int higher);
 	static string getStringDesc(string descriptor);
-public:
-	BankDriver();
-	~BankDriver();
-	void mainScreen();
+	void userScreen(User* user);
+	void accountsScreen(User* user);
 	void exit();
 	void userLoginScreen();
 	void createAccountScreen();
@@ -37,6 +35,13 @@ public:
 	void managerScreen();
 	void accountsScreen();
 	void bankAccountScreen(BankAccount* acct);
+	void bankAccountViewScreen(BankAccount* acct, User* user);
+	void viewUsersScreen();
+public:
+	BankDriver();
+	~BankDriver();
+
+	void mainScreen();
 };
 
 

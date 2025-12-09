@@ -2,9 +2,11 @@
 
 BankDriver::~BankDriver() {
 	users.clear();
+	managers.clear();
 }
 
 BankDriver::BankDriver() {
+	managers.push_back(new Manager(new Login("test", "TestTestTest1!")));
 	load();
 }
 
@@ -120,6 +122,7 @@ void BankDriver::managerLoginScreen() {
 				i++;
 				continue;
 			}
+
 			current_manager = managers.at(i);
 			currentUsername = "";
 			currentPassword = "";
@@ -142,15 +145,33 @@ void BankDriver::managerLoginScreen() {
 void BankDriver::managerScreen() {
 	cout << "Manager Screen" << endl;
 	cout << "Manager Username: " << current_manager->getLogin()->getUsername() << endl;
-	cout << "There is nothing to do here, this is just to prove that there is a manager class\n1. Logout" << endl;
-	int nextScreen = getNextScreen(1, 1);
+	cout << "1. View User Accounts\n2. Logout" << endl;
+	int nextScreen = getNextScreen(1, 2);
 	switch (nextScreen) {
 	case 1:
+		viewUsersScreen();
+		break;
+	case 2:
 		current_manager = nullptr;
 		cout << "Logged Out!" << endl;
 		managerLoginScreen();
 		break;
 	}
+	return;
+}
+
+void BankDriver::viewUsersScreen() {
+	cout << "Users View Screen" << endl;
+	for (int i = 0; i < users.size(); i++) {
+		cout << i << ". Username: " << users.at(i)->getLogin()->getUsername() << endl;
+	}
+	cout << users.size() << ". Go Back" << endl;
+	int nextScreen = getNextScreen(0, users.size());
+	if (nextScreen ==  users.size()) {
+		managerScreen();
+		return;
+	}
+	userScreen(users.at(nextScreen));
 	return;
 }
 
@@ -179,6 +200,25 @@ void BankDriver::userScreen() {
 	return;
 }
 
+void BankDriver::userScreen(User* user) {
+	cout << "User Screen" << endl;
+	cout << "Username: " << user->getLogin()->getUsername() << endl;
+	cout << "1. View Accounts\n2. Create New Account\n3. Logout" << endl;
+	int nextScreen = getNextScreen(1, 2);
+	string accountDescription;
+	switch (nextScreen) {
+	case 1:
+		accountsScreen(user);
+		break;
+	case 2:
+		user = nullptr;
+		cout << "Logged Out!" << endl;
+		viewUsersScreen();
+		break;
+	}
+	return;
+}
+
 void BankDriver::accountsScreen() {
 	cout << "Accounts Screen" << endl;
 	cout << "Username: " << current_user->getLogin()->getUsername() << endl;
@@ -192,6 +232,22 @@ void BankDriver::accountsScreen() {
 		return;
 	}
 	bankAccountScreen(current_user->getAccountAt(nextScreen));
+	return;
+}
+
+void BankDriver::accountsScreen(User* user) {
+	cout << "Accounts Screen" << endl;
+	cout << "Username: " << user->getLogin()->getUsername() << endl;
+	for (int i = 0; i < user->getNumAccounts(); i++) {
+		cout << i << ". Account #" << user->getAccountAt(i)->getAccountNumber() << " " << user->getAccountAt(i)->getAccountType() << endl;
+	}
+	cout << user->getNumAccounts() << ". Go Back" << endl;
+	int nextScreen = getNextScreen(0, user->getNumAccounts());
+	if (nextScreen == user->getNumAccounts()) {
+		userScreen(user);
+		return;
+	}
+	bankAccountViewScreen(user->getAccountAt(nextScreen), user);
 	return;
 }
 
@@ -220,6 +276,23 @@ void BankDriver::bankAccountScreen(BankAccount* acct) {
 		break;
 	case 4:
 		accountsScreen();
+		break;
+	}
+	return;
+}
+
+void BankDriver::bankAccountViewScreen(BankAccount* acct, User* user) {
+	cout << "Bank Account Screen" << endl;
+	cout << "Bank Account #" << acct->getAccountNumber() << endl;
+	cout << "1. View Account Summary\n2. Back" << endl;
+	int nextScreen = getNextScreen(1, 2);
+	switch (nextScreen) {
+	case 1:
+		acct->printAccountSummary();
+		bankAccountViewScreen(acct, user);
+		break;
+	case 2:
+		accountsScreen(user);
 		break;
 	}
 	return;
