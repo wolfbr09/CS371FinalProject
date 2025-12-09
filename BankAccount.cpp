@@ -11,7 +11,7 @@ BankAccount::BankAccount() {
 	activeAccounts++;
 	balance = 0;
 	accountType = "";
-	transactionsHead = new Transaction(accountNumber, 0, "Balance as of Account Open");
+	transactions.push_back(new Transaction(accountNumber, 0, "Balance as of Account Open"));
 }
 
 BankAccount::BankAccount(double value) {
@@ -20,7 +20,7 @@ BankAccount::BankAccount(double value) {
 	activeAccounts++;
 	balance = value;
 	accountType = "";
-	transactionsHead = new Transaction(accountNumber, value, "Balance as of Account Open");
+	transactions.push_back(new Transaction(accountNumber, value, "Balance as of Account Open"));
 }
 
 BankAccount::BankAccount(double value, string type) {
@@ -29,7 +29,7 @@ BankAccount::BankAccount(double value, string type) {
 	activeAccounts++;
 	balance = value;
 	accountType = type;
-	transactionsHead = new Transaction(accountNumber, value, "Balance as of Account Open");
+	transactions.push_back(new Transaction(accountNumber, value, "Balance as of Account Open"));
 }
 
 BankAccount::BankAccount(string type) {
@@ -38,7 +38,7 @@ BankAccount::BankAccount(string type) {
 	activeAccounts++;
 	balance = 0;
 	accountType = type;
-	transactionsHead = new Transaction(accountNumber, 0, "Balance as of Account Open");
+	transactions.push_back(new Transaction(accountNumber, 0, "Balance as of Account Open"));
 }
 
 BankAccount::BankAccount(BankAccount& acct) {
@@ -47,7 +47,7 @@ BankAccount::BankAccount(BankAccount& acct) {
 	activeAccounts++;
 	balance = acct.getBalance();
 	accountType = acct.getAccountType();
-	transactionsHead = new Transaction(accountNumber, acct.getBalance(), "Balance as of Account Open");
+	transactions.push_back(new Transaction(accountNumber, acct.getBalance(), "Balance as of Account Open"));
 }
 
 // This should ONLY be used when loading data
@@ -55,17 +55,13 @@ BankAccount::BankAccount(int acctNum, double value, string type){
 	accountNumber = acctNum;
 	balance = value;
 	accountType = type;
-	transactionsHead = 0;
 }
 
 BankAccount::~BankAccount() {
-	Transaction* currTransaction = transactionsHead;
-	while (currTransaction != nullptr) {
-		Transaction* prevTransaction = currTransaction;
-		currTransaction = currTransaction->get_next();
-		delete prevTransaction;
+	for (int i = 0; i < transactions.size(); i++) {
+		delete transactions.at(i);
 	}
-	transactionsHead = nullptr;
+	transactions.clear();
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -110,23 +106,15 @@ void BankAccount::printAccountSummary() {
 	cout << "Account Number: " << accountNumber << endl;
 	cout << "Current Balance: $" << balance << endl;
 	cout << "-----Transaction History (Oldest to Newest)-----" << endl;
-	int counter = 0;
-	Transaction* curr = transactionsHead;
-	while (curr != nullptr) {
-		cout << counter << ": $" << curr->get_value() << " : " << curr->get_description() << endl;
-		counter++;
+	for (int i = 0; i < transactions.size(); i++) {
+		cout << i << ": $" << transactions.at(i)->get_value() << " : " << transactions.at(i)->get_description() << endl;
 	}
 	cout << "---------------------------------------" << endl;
 }
 
 // Adds a new transaction to the end of the transactionsHead linked list
 void BankAccount::addNewTransaction(Transaction* tr) {
-	Transaction* curr = transactionsHead;
-	while (curr->get_next() != nullptr) {
-		curr = curr->get_next();
-	}
-	curr->set_next(tr);
-	tr->set_previous(curr);
+	transactions.push_back(tr);
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -139,8 +127,12 @@ string BankAccount::getAccountType() {
 	return accountType;
 }
 
-Transaction* BankAccount::getTransactions() { 
-	return transactionsHead; 
+vector<Transaction*> BankAccount::getTransactions() { 
+	return transactions;
+}
+
+int BankAccount::getAccountNumber() {
+	return accountNumber;
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

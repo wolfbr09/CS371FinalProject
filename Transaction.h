@@ -13,8 +13,6 @@ class Transaction{
 private:
 	double value;
 	string description;
-	Transaction* next = 0;
-	Transaction* previous = 0;
 	int bankAccountNumber = -1;
 public:
 	// Constructors
@@ -25,10 +23,6 @@ public:
 	double get_value();
 	string get_description();
 	void set_description(string desc);
-	void set_next(Transaction* new_next);
-	void set_previous(Transaction* new_prev);
-	Transaction* get_next();
-	Transaction* get_previous();
 	int get_bank_num();
 	void set_bank_num(int newNum);
 	

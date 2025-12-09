@@ -73,10 +73,10 @@ string Login::enterSecurePassword() {
 		cout << "Re-enter Password: ";
 		cin >> passCheck;
 		cout << endl;
-		if (!pass.compare(passCheck)) {
+		if (pass.compare(passCheck) != 0) {
 			cout << "Passwords do not match." << endl;
 		}
-	} while (!pass.compare(passCheck)); // Make user enter passwords until the two passwords match
+	} while (pass.compare(passCheck) != 0); // Make user enter passwords until the two passwords match
 	
 	return pass;
 }

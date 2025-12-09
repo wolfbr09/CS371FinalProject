@@ -32,18 +32,6 @@ string Transaction::get_description() {
 void Transaction::set_description(string desc) {
 	description = desc;
 }
-void Transaction::set_next(Transaction* new_next) {
-	if (new_next != this)  next = new_next;
-}
-void Transaction::set_previous(Transaction* new_prev) {
-	if (new_prev != this)  previous = new_prev;
-}
-Transaction* Transaction::get_next() {
-	return next;
-}
-Transaction* Transaction::get_previous() { 
-	return previous;
-}
 
 int Transaction::get_bank_num() {
 	return bankAccountNumber;

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include "Transaction.h"
+#include <vector>
 
 // Contains the Declaration of the BankAccount class
 
@@ -20,8 +21,7 @@ private:
 	string accountType;
 	double balance;
 
-	Transaction* transactionsHead;
-	// And customer information?
+	vector<Transaction*> transactions;
 	
 public:
 	BankAccount();
@@ -39,7 +39,8 @@ public:
 
 	double getBalance();
 	string getAccountType();
-	Transaction* getTransactions();
+	int getAccountNumber();
+	vector<Transaction*> getTransactions();
 
 	static void save(BankAccount& acct);
 	static void load();

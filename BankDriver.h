@@ -4,15 +4,27 @@
 #define BANK_DRIVER_H
 
 #include <iostream>
+#include "User.h"
+#include "Manager.h"
+#include <vector>
+#include "BankAccount.h"
+
 using namespace std;
 
 class BankDriver {
 private:
-	//USER_CLASS_NAME_HERE* users[];
-	//int usersSize = 0;
-	//USER_CLASS_NAME_HERE* current_user;
+	vector<User*> users;
+	vector<Manager*> managers;
+	int usersSize = 0;
+	User* current_user = nullptr;
+	Manager* current_manager = nullptr;
+	string currentUsername = "";
+	string currentPassword = "";
 	void save();
 	void load();
+
+	static int getNextScreen(int lower, int higher);
+	static string getStringDesc(string descriptor);
 public:
 	BankDriver();
 	~BankDriver();
@@ -21,6 +33,10 @@ public:
 	void userLoginScreen();
 	void createAccountScreen();
 	void managerLoginScreen();
+	void userScreen();
+	void managerScreen();
+	void accountsScreen();
+	void bankAccountScreen(BankAccount* acct);
 };
 
 
