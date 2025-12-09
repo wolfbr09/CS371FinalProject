@@ -6,9 +6,10 @@
 #include <string>
 #include "Login.h"
 #include "BankAccount.h"
+#include "Person.h"
 using namespace std;
 
-class User {
+class User : public Person {
 private:
     Login* login;
 

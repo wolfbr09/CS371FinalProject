@@ -4,6 +4,7 @@ Manager::Manager(string user, string pass) {
     username = user;
     password = pass;
 
+}
 Manager::Manager(Login* loginPtr) {
     login = loginPtr;
     users = nullptr;
