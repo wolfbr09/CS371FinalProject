@@ -3,7 +3,7 @@
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*							Constructors
+					Constructors & Destructor
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 BankAccount::BankAccount() {
 	accountNumber = accountNumberCounter;
@@ -112,7 +112,7 @@ void BankAccount::printAccountSummary() {
 	cout << "---------------------------------------" << endl;
 }
 
-// Adds a new transaction to the end of the transactionsHead linked list
+// Adds a new transaction to the end of the transactions vector
 void BankAccount::addNewTransaction(Transaction* tr) {
 	transactions.push_back(tr);
 }

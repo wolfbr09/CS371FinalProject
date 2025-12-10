@@ -13,6 +13,9 @@ Manager::Manager(Login* loginPtr) {
 }
 
 Manager::~Manager() {
+    for (int i = 0; i < numUsers; i++) {
+        delete users[i];
+    }
     delete[] users;
 }
 

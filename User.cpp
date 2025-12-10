@@ -8,7 +8,11 @@ User::User(Login* loginPtr) {
 }
 
 User::~User() {
+    for (int i = 0; i < numAccounts; i++) {
+        delete accounts[i];
+    }
     delete[] accounts;
+    delete login;
 }
 
 void User::growAccountsArray() {

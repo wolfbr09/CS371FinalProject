@@ -1,7 +1,13 @@
 #include "BankDriver.h"
 
 BankDriver::~BankDriver() {
+	for (int i = 0; i < users.size(); i++) {
+		delete users.at(i);
+	}
 	users.clear();
+	for (int i = 0; i < managers.size(); i++) {
+		delete managers.at(i);
+	}
 	managers.clear();
 }
 

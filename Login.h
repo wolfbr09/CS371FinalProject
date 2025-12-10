@@ -15,10 +15,10 @@ private:
 	static vector<string> usernames;
 	string username;
 	string password;
-	~Login();
 	static string enterUniqueUsername();
 	static string enterSecurePassword();
 public:
+	~Login();
 	static Login* createLogin();
 	Login(string user, string pass);
 	string getUsername();
