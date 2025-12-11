@@ -1,4 +1,5 @@
 #include "BankDriver.h"
+#include <fstream>
 
 BankDriver::~BankDriver() {
 	for (int i = 0; i < users.size(); i++) {
@@ -17,13 +18,36 @@ BankDriver::BankDriver() {
 }
 
 void BankDriver::save() {
+	ofstream userFile("user.txt");
+	if (!userfile) {
+		cout << "Error: Could not open user.txt for writing." << endl;
+	}
+
+	for (int i = 0; i < users.size(); i++) {
+		Login* login = users[i]->getLogin();
+		userFile << login->getUsername() << " " << login->getPassword() << "\n";
+	}
 	cout << "Data saved!" << endl;
-	return; // Needs to be implemented once User & Manager classes are complete
 }
 
 void BankDriver::load() {
-	cout << "Data loaded!" << endl;
-	return; // Needs to be implemented once User & Manager classes are complete
+	ifstream managerFile("manager.txt");
+	if (managerFile) {
+		string usr, pass;
+		while (mFile >> usr >> pass) {
+			managers.push_back(new Manager(new Login(user, pass)));
+		}
+	}
+	mfile.close();
+
+	ifstream uFile("user.txt");
+	while (uFile >> usr >> pass) {
+		users.push_back(new User(new Login(usr, pass)));
+		usersSize++;
+	}
+	uFile.close();
+
+	cout << "Data Loaded!" << endl;
 }
 
 void BankDriver::mainScreen() {
