@@ -43,7 +43,6 @@ void BankDriver::save() {
 			}
 
 		}
-		userFile << "\n";
 	}
 
 	cout << "Data saved!" << endl;

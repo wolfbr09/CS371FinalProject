@@ -20,7 +20,7 @@ private:
 	int accountNumber;
 	string accountType;
 	double balance;
-	int numTransactions = 0;
+	int numTransactions = 1;
 
 	vector<Transaction*> transactions;
 	
