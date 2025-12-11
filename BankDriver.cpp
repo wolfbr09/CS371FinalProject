@@ -13,7 +13,6 @@ BankDriver::~BankDriver() {
 }
 
 BankDriver::BankDriver() {
-	managers.push_back(new Manager(new Login("test", "TestTestTest1!")));
 	load();
 }
 
@@ -45,7 +44,7 @@ void BankDriver::save() {
 
 
 void BankDriver::load() {
-	ifstream managerFile("manager.txt");
+	ifstream managerFile("managers.txt");
 	if (managerFile) {
 		string mUser, mPass;
 		while (managerFile >> mUser >> mPass) {

@@ -22,7 +22,7 @@ public:
     User(Login* loginPtr);
     ~User();
 
-    string getUserName() override { return login->getUsername(); }
+    string getUsername() override { return login->getUsername(); }
     bool addAccount(BankAccount* acct);
     int getNumAccounts();
     BankAccount* getAccountAt(int index);

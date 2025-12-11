@@ -27,6 +27,9 @@ Login* Login::createLogin() {
 Login::Login(string user, string pass) {
 	username = user;
 	password = pass;
+
+	users.push_back(this);
+	usernames.push_back(user);
 }
 
 Login::~Login() {
