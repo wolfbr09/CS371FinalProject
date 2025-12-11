@@ -11,7 +11,7 @@ BankAccount::BankAccount() {
 	activeAccounts++;
 	balance = 0;
 	accountType = "";
-	transactions.push_back(new Transaction(accountNumber, 0, "Balance as of Account Open"));
+	transactions.push_back(new Transaction(accountNumber, 0, "Balance_as_of_Account_Open"));
 }
 
 BankAccount::BankAccount(double value) {
@@ -20,7 +20,7 @@ BankAccount::BankAccount(double value) {
 	activeAccounts++;
 	balance = value;
 	accountType = "";
-	transactions.push_back(new Transaction(accountNumber, value, "Balance as of Account Open"));
+	transactions.push_back(new Transaction(accountNumber, value, "Balance_as_of_Account_Open"));
 }
 
 BankAccount::BankAccount(double value, string type) {
@@ -29,7 +29,15 @@ BankAccount::BankAccount(double value, string type) {
 	activeAccounts++;
 	balance = value;
 	accountType = type;
-	transactions.push_back(new Transaction(accountNumber, value, "Balance as of Account Open"));
+	transactions.push_back(new Transaction(accountNumber, value, "Balance_as_of_Account_Open"));
+}
+
+BankAccount::BankAccount(double value, string type, bool booleanThing) {
+	accountNumber = accountNumberCounter;
+	accountNumberCounter++;
+	activeAccounts++;
+	balance = value;
+	accountType = type;
 }
 
 BankAccount::BankAccount(string type) {
@@ -38,7 +46,7 @@ BankAccount::BankAccount(string type) {
 	activeAccounts++;
 	balance = 0;
 	accountType = type;
-	transactions.push_back(new Transaction(accountNumber, 0, "Balance as of Account Open"));
+	transactions.push_back(new Transaction(accountNumber, 0, "Balance_as_of_Account_Open"));
 }
 
 BankAccount::BankAccount(BankAccount& acct) {
@@ -47,7 +55,7 @@ BankAccount::BankAccount(BankAccount& acct) {
 	activeAccounts++;
 	balance = acct.getBalance();
 	accountType = acct.getAccountType();
-	transactions.push_back(new Transaction(accountNumber, acct.getBalance(), "Balance as of Account Open"));
+	transactions.push_back(new Transaction(accountNumber, acct.getBalance(), "Balance_as_of_Account_Open"));
 }
 
 // This should ONLY be used when loading data
@@ -115,6 +123,11 @@ void BankAccount::printAccountSummary() {
 // Adds a new transaction to the end of the transactions vector
 void BankAccount::addNewTransaction(Transaction* tr) {
 	transactions.push_back(tr);
+	numTransactions++;
+}
+
+int BankAccount::getNumTransactions() {
+	return numTransactions;
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

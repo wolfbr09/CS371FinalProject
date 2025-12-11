@@ -20,6 +20,7 @@ private:
 	int accountNumber;
 	string accountType;
 	double balance;
+	int numTransactions = 0;
 
 	vector<Transaction*> transactions;
 	
@@ -30,6 +31,7 @@ public:
 	BankAccount(string type);
 	BankAccount(int acctNum, double value, string type);
 	BankAccount(BankAccount& acct);
+	BankAccount(double value, string type, bool booleanThing);
 	~BankAccount();
 	
 	double withdraw(double amount);
@@ -41,6 +43,8 @@ public:
 	string getAccountType();
 	int getAccountNumber();
 	vector<Transaction*> getTransactions();
+
+	int getNumTransactions();
 
 	static void save(BankAccount& acct);
 	static void load();

@@ -34,7 +34,14 @@ void BankDriver::save() {
 
 		for (int j = 0; j < numAccts; j++) {
 			BankAccount* acct = u->getAccountAt(j);
-			userFile << acct->getAccountType() << " " << acct->getBalance() << "\n";
+			userFile << acct->getAccountType() << " " << acct->getBalance() << " " << acct->getNumTransactions() << "\n";
+
+			int numTransactions = acct->getTransactions().size();
+
+			for (int l = 0; l < numTransactions; l++) {
+				userFile << acct->getTransactions().at(l)->get_description() << " " << acct->getTransactions().at(l)->get_value() << "\n";
+			}
+
 		}
 		userFile << "\n";
 	}
@@ -69,17 +76,23 @@ void BankDriver::load() {
 	while (userFile >> username >> password) {
 		User* u = new User(new Login(username, password));
 		int numAccts;
+		users.push_back(u);
+		usersSize++;
 		if (!(userFile >> numAccts)) break;
 
 		for (int i = 0; i < numAccts; i++) {
 			string type;
 			double bal;
-			if (!(userFile >> type >> bal)) break;
-			u->addAccount(new BankAccount(bal, type));
+			int transactions;
+			if (!(userFile >> type >> bal >> transactions)) break;
+			u->addAccount(new BankAccount(bal, type, true));
+			for (int j = 0; j < transactions; j++) {
+				double val;
+				string desc;
+				if(!(userFile >> desc >> val)) break;
+				u->getAccountAt(i)->addNewTransaction(new Transaction(u->getAccountAt(i)->getAccountNumber(), val, desc));
+			}
 		}
-
-		users.push_back(u);
-		usersSize++;
 	}
 
 	cout << "Data loaded!" << endl;
@@ -268,7 +281,7 @@ void BankDriver::userScreen() {
 void BankDriver::userScreen(User* user) {
 	cout << "User Screen" << endl;
 	cout << "Username: " << user->getLogin()->getUsername() << endl;
-	cout << "1. View Accounts\n2. Create New Account\n3. Logout" << endl;
+	cout << "1. View Accounts\n2. Logout" << endl;
 	int nextScreen = getNextScreen(1, 2);
 	string accountDescription;
 	switch (nextScreen) {

@@ -8,6 +8,7 @@
 Transaction::Transaction(int bankNum, double new_val) { 
 	bankAccountNumber = bankNum;
 	value = new_val;
+	description = "default_description";
 }
 Transaction::Transaction(int bankNum, double new_val, string new_desc) { 
 	bankAccountNumber = bankNum;
