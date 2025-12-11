@@ -12,9 +12,6 @@ using namespace std;
 
 class Manager : public Person {
 private:
-    string username;
-	string password;
-    Login* login;
     User** users;
     int numUsers;
     int capacity;
@@ -22,12 +19,8 @@ private:
     void growUsersArray();
 
 public:
-    Manager(string user, string pass);
     Manager(Login* loginPtr);
     ~Manager();
-
-    string getUsername() override;
-    Login* getLogin();
 
     bool addUser(User* user);
     int getNumUsers();

@@ -1,7 +1,6 @@
 #include "User.h"
 
-User::User(Login* loginPtr) {
-    login = loginPtr;
+User::User(Login* loginPtr) : Person(loginPtr){
     accounts = nullptr;
     numAccounts = 0;
     capacity = 0;
@@ -12,7 +11,6 @@ User::~User() {
         delete accounts[i];
     }
     delete[] accounts;
-    delete login;
 }
 
 void User::growAccountsArray() {
@@ -33,21 +31,6 @@ void User::growAccountsArray() {
 
     accounts = newArray;
     capacity = newCapacity;
-}
-
-
-string User::getUsername() {
-    if (login != nullptr) {
-        return login->getUsername();
-    }
-    else {
-        return "";
-    }
-}
-
-
-Login* User::getLogin() {
-    return login;
 }
 
 bool User::addAccount(BankAccount* acct) {

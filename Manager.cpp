@@ -1,12 +1,6 @@
 #include "Manager.h"
 
-Manager::Manager(string user, string pass) {
-    username = user;
-    password = pass;
-
-}
-Manager::Manager(Login* loginPtr) {
-    login = loginPtr;
+Manager::Manager(Login* loginPtr) : Person(loginPtr){
     users = nullptr;
     numUsers = 0;
     capacity = 0;
@@ -30,14 +24,6 @@ void Manager::growUsersArray() {
     delete[] users;
     users = newArray;
     capacity = newCapacity;
-}
-
-string Manager::getUsername() {
-    return (login != nullptr) ? login->getUsername() : "";
-}
-
-Login* Manager::getLogin() {
-    return login;
 }
 
 bool Manager::addUser(User* user) {

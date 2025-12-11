@@ -11,8 +11,6 @@ using namespace std;
 
 class User : public Person {
 private:
-    Login* login;
-
     BankAccount** accounts;
     int numAccounts;
     int capacity;
@@ -24,8 +22,6 @@ public:
     User(Login* loginPtr);
     ~User();
 
-    string getUsername() override;
-    Login* getLogin();
     bool addAccount(BankAccount* acct);
     int getNumAccounts();
     BankAccount* getAccountAt(int index);
