@@ -13,9 +13,7 @@ public:
     Person(Login* loginPtr) : login(loginPtr) {}
     virtual ~Person() { delete login; }
     
-    virtual string getUsername() { 
-        return (login != nullptr) ? login->getUsername() : "";
-    };
+    virtual string getUsername() = 0;
     Login* getLogin() { return login; }
 };
 

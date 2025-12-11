@@ -25,6 +25,7 @@ public:
     bool addUser(User* user);
     int getNumUsers();
     User* getUserAt(int index);
+    string getUserName() override { return login->getUsername(); }
 
     void viewAllUsers();
     void viewAllAccounts();

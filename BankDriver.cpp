@@ -18,36 +18,72 @@ BankDriver::BankDriver() {
 }
 
 void BankDriver::save() {
-	ofstream userFile("user.txt");
-	if (!userfile) {
-		cout << "Error: Could not open user.txt for writing." << endl;
+	ofstream userFile("users.txt");
+	if (!userFile) {
+		cout << "Error: Could not open users.txt for writing." << endl;
+		return;
 	}
 
 	for (int i = 0; i < users.size(); i++) {
-		Login* login = users[i]->getLogin();
+		User* u = users[i];
+		Login* login = u->getLogin();
+
 		userFile << login->getUsername() << " " << login->getPassword() << "\n";
+
+		int numAccts = u->getNumAccounts();
+		userFile << numAccts << "\n";
+
+		for (int j = 0; j < numAccts; j++) {
+			BankAccount* acct = u->getAccountAt(j);
+			userFile << acct->getAccountType() << " " << acct->getBalance() << "\n";
+		}
+		userFile << "\n";
 	}
+
 	cout << "Data saved!" << endl;
 }
+
 
 void BankDriver::load() {
 	ifstream managerFile("manager.txt");
 	if (managerFile) {
-		string usr, pass;
-		while (mFile >> usr >> pass) {
-			managers.push_back(new Manager(new Login(user, pass)));
+		string mUser, mPass;
+		while (managerFile >> mUser >> mPass) {
+			managers.push_back(new Manager(new Login(mUser, mPass)));
 		}
+		managerFile.close();
 	}
-	mfile.close();
 
-	ifstream uFile("user.txt");
-	while (uFile >> usr >> pass) {
-		users.push_back(new User(new Login(usr, pass)));
+	ifstream userFile("users.txt");
+	if (!userFile) {
+		ofstream createFile("users.txt");
+		createFile.close();
+
+		cout << "users.txt not found. Created a new empty file." << endl;
+		usersSize = 0;
+		return;
+	}
+
+	string username, password;
+	usersSize = 0;
+
+	while (userFile >> username >> password) {
+		User* u = new User(new Login(username, password));
+		int numAccts;
+		if (!(userFile >> numAccts)) break;
+
+		for (int i = 0; i < numAccts; i++) {
+			string type;
+			double bal;
+			if (!(userFile >> type >> bal)) break;
+			u->addAccount(new BankAccount(bal, type));
+		}
+
+		users.push_back(u);
 		usersSize++;
 	}
-	uFile.close();
 
-	cout << "Data Loaded!" << endl;
+	cout << "Data loaded!" << endl;
 }
 
 void BankDriver::mainScreen() {
